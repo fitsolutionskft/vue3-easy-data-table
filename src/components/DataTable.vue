@@ -37,6 +37,23 @@
             <th
               v-for="(header, index) in headersForRender"
               :key="index"
+            >
+              <slot
+                v-if="slots[`filter-${header.value}`]"
+                :name="`filter-${header.value}`"
+                v-bind="header"
+              />
+              <slot
+                v-else-if="slots[`filter-${header.value.toLowerCase()}`]"
+                :name="`filter-${header.value.toLowerCase()}`"
+                v-bind="header"
+              />
+            </th>
+          </tr>
+          <tr>
+            <th
+              v-for="(header, index) in headersForRender"
+              :key="index"
               :class="[{
                 sortable: header.sortable,
                 'none': header.sortable && header.sortType === 'none',
@@ -73,7 +90,7 @@
                   v-else-if="slots['header']"
                   name="header"
                   v-bind="header"
-                />   
+                />
                 <span
                   v-else
                   class="header-text"
@@ -145,7 +162,7 @@
                 // eslint-disable-next-line max-len
                 }, typeof bodyItemClassName === 'string' ? bodyItemClassName : bodyItemClassName(column, index + 1), `direction-${bodyTextDirection}`]"
                 @click="column === 'expand' ? updateExpandingItemIndexList(index + prevPageEndIndex, item, $event) : null"
-              > 
+              >
                 <slot
                   v-if="slots[`item-${column}`]"
                   :name="`item-${column}`"
