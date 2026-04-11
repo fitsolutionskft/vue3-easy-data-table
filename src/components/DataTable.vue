@@ -37,6 +37,11 @@
             <th
               v-for="(header, index) in headersForRender"
               :key="index"
+              :class="[{
+                'shadow': header.value === lastFixedColumn,
+              // eslint-disable-next-line max-len
+              }, typeof filterHeaderItemClassName === 'string' ? filterHeaderItemClassName : filterHeaderItemClassName(header as Header, index + 1)]"
+              :style="getFixedDistance(header.value)"
             >
               <slot
                 v-if="slots[`filter-${header.value}`]"
