@@ -593,7 +593,7 @@ const getFixedDistance = (column: string, type: 'td' | 'th' = 'th') => {
   if (!fixedHeaders.value.length) return undefined;
   const columInfo = fixedColumnsInfos.value.find((info) => info.value === column);
   if (columInfo) {
-    return `left: ${columInfo.distance}px;z-index: ${type === 'th' ? 3 : 1};position: sticky;`;
+    return `left: ${columInfo.distance}px;z-index: ${type === 'th' ? 4 : 1};position: sticky;`;
   }
   return undefined;
 };
