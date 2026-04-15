@@ -33,7 +33,7 @@
           class="vue3-easy-data-table__header"
           :class="[headerClassName]"
         >
-          <tr>
+          <tr v-if="ifHasFilterHeaderSlot">
             <th
               v-for="(header, index) in headersForRender"
               :key="index"
@@ -403,6 +403,11 @@ provide('themeColor', themeColor.value);
 
 // slot
 const slots = useSlots();
+const ifHasFilterHeaderSlot = computed(() => !!Object.keys(
+        Object.keys(slots)
+            .filter(key => key.includes('filter-'))
+            .reduce((obj, key) => ({ ...obj, [key]: slots[key] }), {})
+    ).length);
 const ifHasPaginationSlot = computed(() => !!slots.pagination);
 const ifHasLoadingSlot = computed(() => !!slots.loading);
 const ifHasExpandSlot = computed(() => !!slots.expand);
