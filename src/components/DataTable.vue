@@ -33,10 +33,15 @@
           class="vue3-easy-data-table__header"
           :class="[headerClassName]"
         >
-          <tr>
+          <tr v-if="ifHasFilterHeaderSlot">
             <th
               v-for="(header, index) in headersForRender"
               :key="index"
+              :class="[{
+                'shadow': header.value === lastFixedColumn,
+              // eslint-disable-next-line max-len
+              }, typeof filterHeaderItemClassName === 'string' ? filterHeaderItemClassName : filterHeaderItemClassName(header as Header, index + 1)]"
+              :style="getFixedDistance(header.value)"
             >
               <slot
                 v-if="slots[`filter-${header.value}`]"
@@ -398,6 +403,11 @@ provide('themeColor', themeColor.value);
 
 // slot
 const slots = useSlots();
+const ifHasFilterHeaderSlot = computed(() => !!Object.keys(
+        Object.keys(slots)
+            .filter(key => key.includes('filter-'))
+            .reduce((obj, key) => ({ ...obj, [key]: slots[key] }), {})
+    ).length);
 const ifHasPaginationSlot = computed(() => !!slots.pagination);
 const ifHasLoadingSlot = computed(() => !!slots.loading);
 const ifHasExpandSlot = computed(() => !!slots.expand);
@@ -588,7 +598,7 @@ const getFixedDistance = (column: string, type: 'td' | 'th' = 'th') => {
   if (!fixedHeaders.value.length) return undefined;
   const columInfo = fixedColumnsInfos.value.find((info) => info.value === column);
   if (columInfo) {
-    return `left: ${columInfo.distance}px;z-index: ${type === 'th' ? 3 : 1};position: sticky;`;
+    return `left: ${columInfo.distance}px;z-index: ${type === 'th' ? 4 : 1};position: sticky;`;
   }
   return undefined;
 };

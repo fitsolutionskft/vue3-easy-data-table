@@ -30,6 +30,7 @@
       table-class-name="hc-table"
       header-class-name="hc-header"
       :body-row-class-name="bodyRowClassNameFunction"
+      :filter-header-item-class-name="filterHeaderItemClassNameFunction"
       :header-item-class-name="headerItemClassNameFunction"
       :body-item-class-name="bodyItemClassNameFunction"
       :body-expand-row-class-name="bodyExpandRowClassNameFunction"
@@ -120,7 +121,7 @@ import {
 // import { useRowsPerPage } from 'use-vue3-easy-data-table';
 // import type { UseRowsPerPageReturn } from 'use-vue3-easy-data-table';
 import type {
-  Header, Item, FilterOption, ClickRowArgument, UpdateSortArgument, HeaderItemClassNameFunction, BodyItemClassNameFunction, BodyRowClassNameFunction,
+  Header, Item, FilterOption, ClickRowArgument, UpdateSortArgument, FilterHeaderItemClassNameFunction, HeaderItemClassNameFunction, BodyItemClassNameFunction, BodyRowClassNameFunction,
   TextDirection,
 } from '../types/main';
 import DataTable from '../components/DataTable.vue';
@@ -232,6 +233,7 @@ const nameCriteria = ref('');
 const bodyRowClassNameFunction: BodyRowClassNameFunction = (item: Item, index: number): string => (index === 0 ? 'first-row test-row' : '');
 const bodyExpandRowClassNameFunction: BodyRowClassNameFunction = (item: Item, index: number): string => 'expand-row';
 
+const filterHeaderItemClassNameFunction: FilterHeaderItemClassNameFunction = (header: Header, index: number): string => (header.value === 'name' ? 'name-header' : '');
 const headerItemClassNameFunction: HeaderItemClassNameFunction = (header: Header, index: number): string => (header.value === 'name' ? 'name-header' : '');
 const bodyItemClassNameFunction: BodyItemClassNameFunction = (column: string, index: number): string => ((column === 'name' && index === 1) ? 'colume_name-index_1' : '');
 // $ref dataTable

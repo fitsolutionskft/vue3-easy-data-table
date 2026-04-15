@@ -1,7 +1,7 @@
 import { PropType } from 'vue';
 import type {
   SortType, Item, ServerOptions, FilterOption,
-  HeaderItemClassNameFunction, BodyItemClassNameFunction, BodyRowClassNameFunction,
+  FilterHeaderItemClassNameFunction, HeaderItemClassNameFunction, BodyItemClassNameFunction, BodyRowClassNameFunction,
   TextDirection,
 } from './types/main';
 import type { ClickEventType } from './types/internal';
@@ -145,6 +145,10 @@ export default {
   },
   headerClassName: {
     type: String,
+    default: '',
+  },
+  filterHeaderItemClassName: {
+    type: [Function, String] as PropType<FilterHeaderItemClassNameFunction | string>,
     default: '',
   },
   headerItemClassName: {
